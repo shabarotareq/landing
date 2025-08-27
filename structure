@@ -1,0 +1,24 @@
+landing-fullstack/
+│
+├─ backend/
+│   ├─ server.js
+│   ├─ package.json
+│   ├─ .env
+│   ├─ routes/email.js
+│   ├─ models/Email.js
+│   └─ config/db.js
+│
+├─ frontend/
+│   ├─ package.json
+│   ├─ public/index.html
+│   ├─ src/
+│   │   ├─ App.jsx
+│   │   ├─ index.js
+│   │   ├─ components/
+│   │   │   ├─ Landing.jsx
+│   │   │   ├─ EmailForm.jsx
+│   │   │   └─ AdminSubscribers.jsx
+│   │   └─ styles/style.css
+│   └─ .env
+│
+└─ README.md
