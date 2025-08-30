@@ -22,3 +22,65 @@ landing-fullstack/
 │   └─ .env
 │
 └─ README.md
+
+backend/
+│── server.js
+│── package.json
+│── .env
+│── config/db.js
+│── models/
+│   ├── Email.js
+│   └── User.js
+│── routes/
+│   ├── emails.js
+│   └── users.js
+
+frontend/
+│── package.json
+│── .env
+│── tailwind.config.js
+│── postcss.config.js
+│── public/
+│── src/
+│   ├── index.js
+│   ├── index.css
+│   ├── App.jsx
+│   ├── api.js
+│   ├── assets/
+│   │    └── ai-solutions.png
+│   ├── components/
+│   │    └── Navbar.jsx
+│   └── pages/
+│        ├── Landing.jsx
+│        ├── Register.jsx
+│        ├── Login.jsx
+│        ├── ForgotPassword.jsx
+│        ├── ResetPassword.jsx
+│        └── Subscribers.jsx  (لوحة المشتركين)
+
+src/
+  ├─ components/
+  │    ├─ Navbar.jsx
+  │    └─ AuthOverlay.jsx
+  ├─ pages/
+  │    ├─ Landing.jsx
+  │    ├─ Login.jsx
+  │    └─ Signup.jsx
+  ├─ App.jsx
+  ├─ AICanvas.jsx
+  └─ api.js
+
+landing/
+├─ src/
+│  ├─ components/
+│  │  ├─ Navbar.jsx
+│  │  ├─ AuthOverlay.jsx
+│  │  ├─ Landing.jsx
+│  │  ├─ AdminPanel.jsx
+│  │  └─ Gallery/
+│  │     ├─ Gallery.jsx
+│  │     └─ Gallery.css
+│  ├─ pages/
+│  │  └─ Dashboard.jsx
+│  ├─ App.jsx
+│  └─ index.js

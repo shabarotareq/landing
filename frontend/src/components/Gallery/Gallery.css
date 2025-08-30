@@ -1,0 +1,53 @@
+.gallery-wrapper {
+  perspective: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery {
+  width: 400px;
+  height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.gallery-image {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: transform 0.5s, opacity 0.5s, box-shadow 0.5s;
+  opacity: 0.6;
+}
+
+/* الصورة الحالية */
+.gallery-image.active {
+  transform: scale(1.2) !important;
+  opacity: 1 !important;
+  border: 3px solid #fff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  z-index: 10;
+}
+
+.gallery-controls {
+  margin-top: 20px;
+}
+
+.gallery-controls button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  background: #6c5ce7;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.gallery-controls button:hover {
+  background: #341f97;
+}

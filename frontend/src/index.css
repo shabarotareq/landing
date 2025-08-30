@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-gray-100 font-sans;
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* الخلفية المتدرجة الديناميكية */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  background: linear-gradient(270deg, #6d5dfc, #ff61d2, #00f0ff, #ffea00);
+  background-size: 800% 800%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* شبكة نقاط AI */
+.ai-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -4;
+}
+
+/* خطوط متوهجة إضافية */
+.ai-line {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1;
+}

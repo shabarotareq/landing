@@ -1,26 +1,26 @@
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/db");
-const emailRoutes = require("./routes/email");
-require("dotenv").config();
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import authRoutes from "./routes/auth.js";
+import adminRoutes from "./routes/admin.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-connectDB();
-
 app.use(cors());
 app.use(express.json());
 
-// API routes
-app.use("/api", emailRoutes);
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection failed:", err));
 
-// Serve React build in Production
-if (process.env.NODE_ENV === "production") {
-  const path = require("path");
-  app.use(express.static(path.join(__dirname, "../frontend/build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
-  });
-}
+app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
