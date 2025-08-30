@@ -1,5 +1,5 @@
 // Landing.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import heroImage from "../assets/image/PropertyIA.webp";
 import API from "../api";
 import Gallery from "./Gallery/Gallery";
@@ -10,7 +10,8 @@ import { loadFull } from "tsparticles";
 export default function Landing({ showGallery, onShowGallery, disabled }) {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [showHero, setShowHero] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+  const [expandVideo, setExpandVideo] = useState(false);
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -27,6 +28,17 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
   const particlesInit = async (main) => {
     await loadFull(main);
   };
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") {
+        setShowVideo(false);
+        setExpandVideo(false);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
 
   return (
     <div className="relative min-h-screen" dir="rtl">
@@ -78,6 +90,7 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
               {
                 title: "تنبؤات السوق",
                 desc: "توقعات ذكية لاتخاذ القرار الأفضل",
+                showVideo: true, // هذا الصندوق سيشغل الفيديو
               },
               {
                 title: "دعم العملاء AI",
@@ -90,6 +103,7 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
                 className="bg-gray-800 bg-opacity-70 backdrop-blur-md border border-white border-opacity-20 rounded-xl p-6 shadow-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
                 onClick={() => {
                   if (item.title === "أتمتة العمليات") onShowGallery();
+                  if (item.showVideo) setShowVideo(true);
                   if (item.link)
                     window.open(item.link, "_blank", "noopener,noreferrer");
                 }}
@@ -101,52 +115,47 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
           </div>
 
           {/* نموذج الاشتراك */}
-          <form
-            onSubmit={handleSubscribe}
-            className="mt-6 flex flex-col md:flex-row gap-3"
-          >
-            <input
-              type="email"
-              placeholder="أدخل بريدك الإلكتروني"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="p-3 rounded-lg border border-white border-opacity-30 bg-gray-700 bg-opacity-50 placeholder-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
-              required
-            />
-            <button
-              type="submit"
-              className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors duration-300"
-            >
-              اشترك الآن
-            </button>
-          </form>
-          {message && <p className="mt-2 text-green-300">{message}</p>}
+          <EmailForm />
         </div>
 
         {/* الصورة الجانبية */}
-        <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center animate__animated animate__fadeInLeft">
+        <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center animate__animated animate__fadeInLeft relative">
           <img
             src={heroImage}
             alt="AI Solutions"
-            className="w-full max-w-lg rounded-xl shadow-lg cursor-pointer"
-            onClick={() => setShowHero(true)}
+            className="w-full max-w-lg rounded-xl shadow-lg"
           />
-        </div>
 
-        {/* Overlay للصورة المكبرة */}
-        {showHero && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
-            onClick={() => setShowHero(false)}
-          >
-            <img
-              src={heroImage}
-              alt="AI Solutions"
-              className="max-w-full max-h-full rounded-xl shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-        )}
+          {/* Overlay الفيديو داخل صندوق الصورة */}
+          {showVideo && (
+            <div
+              className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
+              onClick={() => {
+                setShowVideo(false);
+                setExpandVideo(false);
+              }}
+            >
+              <div
+                className={`relative w-full max-w-3xl transition-all duration-300 ${
+                  expandVideo ? "h-[90vh]" : "h-96"
+                }`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/wKrLod0O-sw?autoplay=1"
+                  title="YouTube video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="rounded-xl shadow-2xl cursor-pointer"
+                  onClick={() => setExpandVideo(!expandVideo)}
+                ></iframe>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* عرض معرض الصور إذا تم الضغط على أتمتة العمليات */}
         {showGallery && <Gallery />}
