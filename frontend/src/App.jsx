@@ -1,13 +1,16 @@
-// App.jsx
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import AuthOverlay from "./components/AuthOverlay";
 import Dashboard from "./pages/Dashboard";
-import AdminPanel from "./components/AdminPanel";
-import Landing from "./components/Landing2";
+import AdminPanel from "./pages/AdminPanel";
+import Settings from "./pages/Settings";
+import Landing from "./components/Landing";
 import Gallery from "./components/Gallery/Gallery";
-import "./components/Gallery/Gallery.css";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,7 +19,7 @@ export default function App() {
 
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
-    setUserRole("admin"); // يمكن تعديل حسب التوكن الحقيقي
+    setUserRole("admin"); // أو user حسب التوكن
   };
 
   const handleLogout = () => {
@@ -45,11 +48,9 @@ export default function App() {
       {isAuthenticated && (
         <Navbar onLogout={handleLogout} userRole={userRole} />
       )}
+
       {/* Landing دائمًا في الخلفية */}
-      <Landing
-        onShowGallery={toggleGallery}
-        disabled={!isAuthenticated} // لتعتيم الشاشة عند عدم تسجيل الدخول
-      />
+      <Landing onShowGallery={toggleGallery} disabled={!isAuthenticated} />
 
       {/* شاشة login overlay عند عدم تسجيل الدخول */}
       {!isAuthenticated && (
@@ -58,7 +59,7 @@ export default function App() {
         </div>
       )}
 
-      {/* معرض الصور overlay فوق Landing فقط عند الضغط على أتمتة العمليات */}
+      {/* معرض الصور overlay */}
       {showGallery && (
         <div
           className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
@@ -71,23 +72,21 @@ export default function App() {
       )}
 
       <Routes>
-        {isAuthenticated && (
-          <Route
-            path="/dashboard"
-            element={
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
-                <div className="md:col-span-3">
-                  <Dashboard userRole={userRole} />
-                </div>
-                {userRole === "admin" && (
-                  <div className="md:col-span-1">
-                    <AdminPanel />
-                  </div>
-                )}
-              </div>
-            }
-          />
-        )}
+        <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/"
+          element={
+            <Landing
+              onShowGallery={toggleGallery}
+              disabled={!isAuthenticated}
+            />
+          }
+        />
       </Routes>
     </Router>
   );
