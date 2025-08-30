@@ -12,6 +12,7 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
   const [message, setMessage] = useState("");
   const [showVideo, setShowVideo] = useState(false);
   const [expandVideo, setExpandVideo] = useState(false);
+  const [showHero, setShowHero] = useState(false); // تكبير الصورة
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -34,6 +35,7 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
       if (e.key === "Escape") {
         setShowVideo(false);
         setExpandVideo(false);
+        setShowHero(false);
       }
     };
     window.addEventListener("keydown", handleKey);
@@ -90,7 +92,7 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
               {
                 title: "تنبؤات السوق",
                 desc: "توقعات ذكية لاتخاذ القرار الأفضل",
-                showVideo: true, // هذا الصندوق سيشغل الفيديو
+                showVideo: true,
               },
               {
                 title: "دعم العملاء AI",
@@ -123,7 +125,8 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
           <img
             src={heroImage}
             alt="AI Solutions"
-            className="w-full max-w-lg rounded-xl shadow-lg"
+            className="w-full max-w-lg rounded-xl shadow-lg cursor-pointer"
+            onClick={() => setShowHero(true)}
           />
 
           {/* Overlay الفيديو داخل صندوق الصورة */}
@@ -153,6 +156,21 @@ export default function Landing({ showGallery, onShowGallery, disabled }) {
                   onClick={() => setExpandVideo(!expandVideo)}
                 ></iframe>
               </div>
+            </div>
+          )}
+
+          {/* Overlay تكبير الصورة عند الضغط على الصورة نفسها */}
+          {showHero && !showVideo && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+              onClick={() => setShowHero(false)}
+            >
+              <img
+                src={heroImage}
+                alt="AI Solutions"
+                className="max-w-full max-h-full rounded-xl shadow-2xl cursor-pointer"
+                onClick={(e) => e.stopPropagation()}
+              />
             </div>
           )}
         </div>
