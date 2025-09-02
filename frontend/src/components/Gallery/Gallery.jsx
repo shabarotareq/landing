@@ -5,6 +5,7 @@ import Marketing from "../../assets/image/market.png";
 import Law from "../../assets/image/law.png";
 import Engineering from "../../assets/image/eng.png";
 import Farmacy from "../../assets/image/farmacy.png";
+import journal from "../../assets/image/journal.png";
 
 export default function Gallery() {
   const images = [
@@ -27,6 +28,10 @@ export default function Gallery() {
     {
       src: Farmacy,
       link: "https://unsplash.com/photos/GXMr7BadXQo",
+    },
+    {
+      src: journal,
+      link: "https://journal-three-gold.vercel.app/",
     },
   ];
 
