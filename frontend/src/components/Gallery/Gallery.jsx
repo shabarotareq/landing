@@ -19,7 +19,7 @@ export default function Gallery() {
     },
     {
       src: Law,
-      link: "https://unsplash.com/photos/cyFBmFEsytU",
+      link: "https://pal-law-ai-amber.vercel.app/",
     },
     {
       src: Engineering,
